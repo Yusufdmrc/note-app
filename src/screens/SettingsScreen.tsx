@@ -6,14 +6,47 @@ import {
   TouchableOpacity,
   Switch,
   ScrollView,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/slices/authSlice";
+import { RootState, AppDispatch } from "../store";
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading } = useSelector((state: RootState) => state.auth);
   const [darkMode, setDarkMode] = React.useState(false);
   const [notifications, setNotifications] = React.useState(true);
+
+  const handleLogout = async () => {
+    Alert.alert(
+      "Çıkış Yap",
+      "Hesabınızdan çıkış yapmak istediğinize emin misiniz?",
+      [
+        {
+          text: "İptal",
+          style: "cancel",
+        },
+        {
+          text: "Çıkış Yap",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await dispatch(logout()).unwrap();
+            } catch (error: any) {
+              Alert.alert(
+                "Hata",
+                error.message || "Çıkış yapılırken bir hata oluştu"
+              );
+            }
+          },
+        },
+      ]
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -49,6 +82,19 @@ const SettingsScreen = () => {
               thumbColor={notifications ? "#007AFF" : "#f4f3f4"}
             />
           </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Hesap</Text>
+          <TouchableOpacity
+            style={[styles.settingItem, styles.logoutButton]}
+            onPress={handleLogout}
+            disabled={loading}
+          >
+            <Text style={styles.logoutButtonText}>
+              {loading ? "Çıkış Yapılıyor..." : "Çıkış Yap"}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.section}>
@@ -122,6 +168,19 @@ const styles = StyleSheet.create({
   settingValue: {
     fontSize: 16,
     color: "#666",
+  },
+  logoutButton: {
+    justifyContent: "center",
+    backgroundColor: "#fee2e2",
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 8,
+  },
+  logoutButtonText: {
+    color: "#ef4444",
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "center",
   },
 });
 

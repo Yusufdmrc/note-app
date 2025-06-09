@@ -1,48 +1,50 @@
 import React from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../navigation/AppNavigator";
+import { useDispatch } from "react-redux";
+import { logout } from "../store/slices/authSlice";
+import { AppDispatch } from "../store";
+
+// Ana ekran için navigation tipi
+type HomeScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Home"
+>;
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const renderNoteItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.noteItem}
-      onPress={() => navigation.navigate("NoteDetail", { noteId: item.id })}
-    >
-      <Text style={styles.noteTitle}>{item.title}</Text>
-      <Text style={styles.notePreview} numberOfLines={2}>
-        {item.content}
-      </Text>
-      <Text style={styles.noteDate}>{item.date}</Text>
-    </TouchableOpacity>
-  );
+  const handleLogout = async () => {
+    dispatch(logout());
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Notlarım</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>YuNote</Text>
+      <Text style={styles.subtitle}>
+        Dijital notlarınızı ve görevlerinizi kolayca yönetin!
+      </Text>
+      <View style={styles.menuContainer}>
         <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => navigation.navigate("AddNote")}
+          style={[styles.menuButton, { backgroundColor: "#2563eb" }]}
+          onPress={() => navigation.navigate("Notes")}
         >
-          <Text style={styles.addButtonText}>+</Text>
+          <Text style={styles.menuButtonText}>Notlarım</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.menuButton, { backgroundColor: "#22c55e" }]}
+          onPress={() => navigation.navigate("TodoList")}
+        >
+          <Text style={styles.menuButtonText}>Yapılacaklar Listesi</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={[]} // TODO: Notları store'dan al
-        renderItem={renderNoteItem}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.notesList}
-      />
-    </SafeAreaView>
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutButtonText}>Çıkış Yap</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -50,54 +52,55 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  addButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "#007AFF",
     justifyContent: "center",
+    paddingHorizontal: 24,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#1e293b",
+    marginBottom: 8,
+    textAlign: "center",
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#64748b",
+    marginBottom: 32,
+    textAlign: "center",
+  },
+  menuContainer: {
+    width: "100%",
+    gap: 20,
+  },
+  menuButton: {
+    paddingVertical: 20,
+    borderRadius: 16,
+    marginBottom: 12,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  menuButtonText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "600",
+  },
+  logoutButton: {
+    marginTop: 32,
+    backgroundColor: "#ef4444",
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    borderRadius: 12,
     alignItems: "center",
   },
-  addButtonText: {
+  logoutButtonText: {
     color: "#fff",
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  notesList: {
-    padding: 16,
-  },
-  noteItem: {
-    backgroundColor: "#f8f9fa",
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 12,
-  },
-  noteTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "600",
-    marginBottom: 8,
-  },
-  notePreview: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 8,
-  },
-  noteDate: {
-    fontSize: 12,
-    color: "#999",
   },
 });
 

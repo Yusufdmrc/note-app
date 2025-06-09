@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "YuNote",
+    "slug": "yunote",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yunote.app"
+    },
+    "android": {
+      "package": "com.yunote.app"
+    }
+  },
+  "extra": {
+    "apiKey": "${API_KEY}",
+    "authDomain": "${AUTH_DOMAIN}",
+    "projectId": "${PROJECT_ID}",
+    "storageBucket": "${STORAGE_BUCKET}",
+    "messagingSenderId": "${MESSAGING_SENDER_ID}",
+    "appId": "${APP_ID}",
+    "measurementId": "${MEASUREMENT_ID}"
+  }
+}
