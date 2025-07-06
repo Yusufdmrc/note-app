@@ -1,0 +1,75 @@
+# YuNote Project - Git Ignore
+
+# React Native / Expo
+frontend/node_modules/
+frontend/.expo/
+frontend/dist/
+frontend/npm-debug.*
+frontend/*.jks
+frontend/*.p8
+frontend/*.p12
+frontend/*.key
+frontend/*.mobileprovision
+frontend/*.orig.*
+frontend/web-build/
+
+# Firebase config files (sensitive)
+frontend/src/config/firebase.ts
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+frontend/.env*
+!frontend/.env.example
+
+# Android keystore files
+frontend/android/app/debug.keystore
+frontend/android/app/release.keystore
+frontend/android/app/*.keystore
+
+# iOS
+frontend/ios/Pods/
+frontend/ios/.xcode.env.local
+
+# Backend
+backend/node_modules/
+backend/.env
+backend/dist/
+backend/build/
+
+# General
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary files
+.tmp/
+.temp/
+
+# Firebase credentials
+firebase-debug.log
+.firebase/
+
+# Sensitive files
+*.pem
+*.key
+*.crt
+config/secrets.js
+config/credentials.json 

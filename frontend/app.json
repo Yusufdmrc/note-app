@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "YuNote",
+    "slug": "yunote",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": ["**/*"],
+    "main": "node_modules/expo/AppEntry.js",
+    "scheme": "yunote",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yunote.app"
+    },
+    "android": {
+      "package": "com.yunote.app"
+    }
+  }
+}
