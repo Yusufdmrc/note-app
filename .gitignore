@@ -72,4 +72,4 @@ firebase-debug.log
 *.key
 *.crt
 config/secrets.js
-config/credentials.json 
+config/credentials.json
